@@ -5,7 +5,7 @@ from os.path import isfile, join
 from math import sin, cos, sqrt, atan2, radians
 from flight import Flight
 
-ORIGIN = (10, 30)
+ORIGIN = (36.25603706192801, -115.06171031492538)
 
 
 def in_search_area(check_lat, check_lon, _distance_in_kms):
@@ -29,23 +29,23 @@ def in_search_area(check_lat, check_lon, _distance_in_kms):
 
 
 flights = {}
-mypath = './../data/'
+mypath = './data/'
 onlyfiles = [f for f in listdir(mypath) if isfile(join(mypath, f))]
 onlyfiles.sort()
 print(f"Dealing with {len(onlyfiles)} files!")
 for i, file in enumerate(onlyfiles):
-    print(i)
-    data = pickle.load(open(f'./../data/{file}', 'rb'))
-    for k, v in data.items():
-        if k == "aircraft":
-            for e in v:
-                if 'hex' in e.keys() and 'lat' in e.keys() and 'lon' in e.keys():
-                    if in_search_area(e['lat'], e['lon'], 50):
-                        if e['hex'] not in flights.keys():
-                            flights[e['hex']] = Flight(e['hex'])
-                        flights[e['hex']].add_coords(e['lat'], e['lon'])
-    if i == 3:
-        break
+    if file.endswith("pickle"):
+        print(i)
+        data = pickle.load(open(f'{mypath}{file}', 'rb'))
+        for k, v in data.items():
+            if k == "aircraft":
+                for e in v:
+                    if 'hex' in e.keys() and 'lat' in e.keys() and 'lon' in e.keys():
+                        if in_search_area(e['lat'], e['lon'], 50):
+                            if e['hex'] not in flights.keys():
+                                flights[e['hex']] = Flight(e['hex'])
+                            flights[e['hex']].add_coords(e['lat'], e['lon'])
+    # IF YOU GRAPH MORE THAN YOU NEED, IT WILL CRASH.
 fig = go.Figure()
 for k, v in flights.items():
     temp = v.get_flight_path()

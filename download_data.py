@@ -7,10 +7,10 @@ from queue import Queue
 import pickle
 
 BASE_URL = "https://samples.adsbexchange.com/readsb-hist"
-
+data_folder_path = './data/'
 
 def write_to_pickle(_url: str, _filename: str) -> None:
-    _fout = open(f"./../data/{_filename}.pickle", "wb")
+    _fout = open(f"{data_folder_path}{_filename}.pickle", "wb")
     pickle.dump(get_data_from_gz_url(_url), _fout)
 
 
