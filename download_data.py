@@ -9,6 +9,7 @@ import pickle
 BASE_URL = "https://samples.adsbexchange.com/readsb-hist"
 data_folder_path = './data/'
 
+
 def write_to_pickle(_url: str, _filename: str) -> None:
     _fout = open(f"{data_folder_path}{_filename}.pickle", "wb")
     pickle.dump(get_data_from_gz_url(_url), _fout)
@@ -49,7 +50,7 @@ def perform_download(q):
         q.task_done()
 
 
-if __name__ == "__main__":
+def main():
     year = 2022
     month = 5
     day = 1
@@ -67,4 +68,8 @@ if __name__ == "__main__":
         worker = threading.Thread(target=perform_download, args=(jobs,))
         worker.start()
     jobs.join()
-    print("Actually done")
+    print("Downloading Finished")
+
+
+if __name__ == "__main__":
+    main()
