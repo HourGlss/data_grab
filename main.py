@@ -5,7 +5,7 @@ from os.path import isfile, join
 from math import sin, cos, sqrt, atan2, radians
 from flight import Flight
 
-ORIGIN = (36.25603706192801, -115.06171031492538)
+ORIGIN = (10, 20)
 
 
 def in_search_area(check_lat, check_lon, _distance_in_kms):
